@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MheanMaa.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace MheanMaa
 {
@@ -37,6 +39,12 @@ namespace MheanMaa
                         .AllowAnyHeader();
                 });
             });
+
+            services.Configure<DBSettings>(
+                Configuration.GetSection(nameof(DBSettings)));
+
+            services.AddSingleton<IDBSettings>(sp =>
+                sp.GetRequiredService<IOptions<DBSettings>>().Value);
 
             services.AddControllers();
 

@@ -10,7 +10,7 @@ namespace MheanMaa.Settings
         public string ConnectionString { get; set; }
         public string DBName { get; set; }
         public string DogsColName { get; set; }
-        
+        public string DonatesColName { get; set; }
     }
 
     public interface IDBSettings
@@ -18,6 +18,7 @@ namespace MheanMaa.Settings
         public string ConnectionString { get; set; }
         public string DBName { get; set; }
         public string DogsColName { get; set; }
+        public string DonatesColName { get; set; }
         
     }
 }

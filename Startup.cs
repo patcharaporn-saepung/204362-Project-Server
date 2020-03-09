@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MheanMaa.Services;
 using MheanMaa.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,6 +46,8 @@ namespace MheanMaa
 
             services.AddSingleton<IDBSettings>(sp =>
                 sp.GetRequiredService<IOptions<DBSettings>>().Value);
+
+            services.AddSingleton<DonateService>();
 
             services.AddControllers();
 

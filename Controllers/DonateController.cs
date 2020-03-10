@@ -20,7 +20,7 @@ namespace MheanMaa.Controllers
             _donateService = donateService;
         }
 
-        [HttpGet]
+        [HttpGet("list")]
         public ActionResult<List<DonateList>> Get()
         {
             return _donateService.Get().Select(don => new DonateList

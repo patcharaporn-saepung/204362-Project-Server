@@ -48,6 +48,7 @@ namespace MheanMaa
                 sp.GetRequiredService<IOptions<DBSettings>>().Value);
 
             services.AddSingleton<DonateService>();
+            services.AddSingleton<DogService>();
 
             services.AddControllers();
 

@@ -31,4 +31,28 @@ namespace MheanMaa.Models
 
         public string Location { get; set; }
     }
+    public class DogList
+    {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+
+        public string Id { get; set; }
+
+        public string[] Name { get; set; }
+
+        public int Age { get; set; }
+
+        public string AgeUnit { get; set; }
+
+        public string Sex { get; set; }
+
+        public string Description { get; set; }
+
+        public bool IsAlive { get; set; }
+
+        public string CollarColor { get; set; }
+
+        public string Caretaker { get; set; }
+
+    }
 }

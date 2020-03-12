@@ -63,9 +63,11 @@ namespace MheanMaa
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseCors("AllowAll");
+
+            app.UseStaticFiles();
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 

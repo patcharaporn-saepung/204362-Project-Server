@@ -30,6 +30,8 @@ namespace MheanMaa.Models
         public string[] CaretakerPhone { get; set; }
 
         public string Location { get; set; }
+
+        public string ImgPath { get; set; }
     }
     public class DogList
     {

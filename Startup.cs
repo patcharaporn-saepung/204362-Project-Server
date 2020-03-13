@@ -47,6 +47,12 @@ namespace MheanMaa
             services.AddSingleton<IDBSettings>(sp =>
                 sp.GetRequiredService<IOptions<DBSettings>>().Value);
 
+            services.Configure<ImageSettings>(
+                Configuration.GetSection(nameof(ImageSettings)));
+
+            services.AddSingleton<IImageSettings>(sp =>
+                sp.GetRequiredService<IOptions<ImageSettings>>().Value);
+
             services.AddSingleton<DonateService>();
             services.AddSingleton<DogService>();
 

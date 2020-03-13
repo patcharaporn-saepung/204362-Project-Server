@@ -18,6 +18,8 @@ namespace MheanMaa.Models
         public string Description { get; set; }
 
         public string QrLink { get; set; }
+
+        public string ImgPath { get; set; }
     }
 
     public class DonateList

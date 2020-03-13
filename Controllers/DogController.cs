@@ -40,7 +40,7 @@ namespace MheanMaa.Controllers
         [HttpGet("{id:length(24)}", Name = "GetDog")]
         public ActionResult<Dog> Get(string id)
         {
-            var dog = _dogService.Get(id);
+            Dog dog = _dogService.Get(id);
 
             if (dog == null)
             {
@@ -61,7 +61,7 @@ namespace MheanMaa.Controllers
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, Dog dogIn)
         {
-            var dog = _dogService.Get(id);
+            Dog dog = _dogService.Get(id);
 
             if (dog == null)
             {
@@ -76,7 +76,7 @@ namespace MheanMaa.Controllers
         [HttpDelete("{id:length(24)}")]
         public IActionResult Delete(string id)
         {
-            var dog = _dogService.Get(id);
+            Dog dog = _dogService.Get(id);
 
             if (dog == null)
             {

@@ -35,7 +35,7 @@ namespace MheanMaa.Controllers
         [HttpGet("{id:length(24)}", Name = "GetDonate")]
         public ActionResult<Donate> Get(string id)
         {
-            var don = _donateService.Get(id);
+            Donate don = _donateService.Get(id);
 
             if (don == null)
             {
@@ -56,7 +56,7 @@ namespace MheanMaa.Controllers
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, Donate donIn)
         {
-            var don = _donateService.Get(id);
+            Donate don = _donateService.Get(id);
 
             if (don == null)
             {
@@ -71,7 +71,7 @@ namespace MheanMaa.Controllers
         [HttpDelete("{id:length(24)}")]
         public IActionResult Delete(string id)
         {
-            var don = _donateService.Get(id);
+            Donate don = _donateService.Get(id);
 
             if (don == null)
             {

@@ -1,10 +1,8 @@
 ﻿using MheanMaa.Models;
 using MheanMaa.Settings;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MheanMaa.Services
 {
@@ -23,8 +21,11 @@ namespace MheanMaa.Services
         public List<Donate> Get() =>
             _donates.Find(_ => true).ToList();
 
-        public Donate Get(string id) =>
-            _donates.Find<Donate>(don => don.Id == id).FirstOrDefault();
+        public List<Donate> Get(int deptNo) =>
+            _donates.Find(don => don.DeptNo == deptNo).ToList();
+
+        public Donate Get(string id, int deptNo) =>
+            _donates.Find(don => don.Id == id && don.DeptNo == deptNo).FirstOrDefault();
 
         public Donate Create(Donate newDon)
         {

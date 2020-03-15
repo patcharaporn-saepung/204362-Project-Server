@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using MheanMaa.Models;
 using MheanMaa.Settings;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +13,7 @@ using SixLabors.ImageSharp.Processing;
 
 namespace ImageUpload.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     public class ImageController : ControllerBase
     {

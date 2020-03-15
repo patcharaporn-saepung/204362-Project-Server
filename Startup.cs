@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Text;
 using MheanMaa.Services;
 using MheanMaa.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MheanMaa
 {
@@ -53,8 +49,37 @@ namespace MheanMaa
             services.AddSingleton<IImageSettings>(sp =>
                 sp.GetRequiredService<IOptions<ImageSettings>>().Value);
 
+            var userSettingsSection = Configuration.GetSection(nameof(UserSettings));
+            services.Configure<UserSettings>(userSettingsSection);
+
+            services.AddSingleton<IUserSettings>(sp =>
+                sp.GetRequiredService<IOptions<UserSettings>>().Value);
+
+            // configure jwt authentication
+            var userSettings = userSettingsSection.Get<UserSettings>();
+            var key = Encoding.ASCII.GetBytes(userSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             services.AddSingleton<DonateService>();
             services.AddSingleton<DogService>();
+            services.AddSingleton<UserService>();
+            services.AddSingleton<AuthenticationService>();
 
             services.AddControllers();
 
@@ -77,6 +102,7 @@ namespace MheanMaa
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -32,6 +32,8 @@ namespace MheanMaa.Models
         public string Location { get; set; }
 
         public string ImgPath { get; set; }
+
+        public int DeptNo { get; set; }
     }
     public class DogList
     {
@@ -55,6 +57,5 @@ namespace MheanMaa.Models
         public string CollarColor { get; set; }
 
         public string Caretaker { get; set; }
-
     }
 }

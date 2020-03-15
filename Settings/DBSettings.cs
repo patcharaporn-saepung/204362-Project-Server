@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MheanMaa.Settings
+﻿namespace MheanMaa.Settings
 {
     public class DBSettings : IDBSettings
     {
@@ -11,6 +6,9 @@ namespace MheanMaa.Settings
         public string DBName { get; set; }
         public string DogsColName { get; set; }
         public string DonatesColName { get; set; }
+        public string UsersColName { get; set; }
+
+
     }
 
     public interface IDBSettings
@@ -19,6 +17,6 @@ namespace MheanMaa.Settings
         public string DBName { get; set; }
         public string DogsColName { get; set; }
         public string DonatesColName { get; set; }
-        
+        public string UsersColName { get; set; }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using MheanMaa.Models;
 using MheanMaa.Settings;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MheanMaa.Services
 {
@@ -21,7 +19,8 @@ namespace MheanMaa.Services
             _dog.Find(_ => true).ToList();
 
         public Dog Get(string id) =>
-            _dog.Find<Dog>(dog => dog.Id == id).FirstOrDefault();
+            _dog.Find(dog => dog.Id == id).FirstOrDefault();
+
         public Dog Create(Dog newDog)
         {
             _dog.InsertOne(newDog);

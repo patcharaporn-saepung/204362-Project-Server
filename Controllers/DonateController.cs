@@ -1,29 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MheanMaa.Models;
 using MheanMaa.Services;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MheanMaa.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DonateController : ControllerBase
     {
         private readonly DonateService _donateService;
+        private readonly UserService _userService;
 
-        public DonateController(DonateService donateService)
+        public DonateController(DonateService donateService, UserService userService)
         {
             _donateService = donateService;
+            _userService = userService;
         }
 
         [HttpGet("list")]
         public ActionResult<List<DonateList>> Get()
         {
-            return _donateService.Get().Select(don => new DonateList
+            User user = _userService.Find(User.Identity.Name);
+
+            return _donateService.Get(user.DeptNo).Select(don => new DonateList
             {
                 Id = don.Id,
                 Title = don.Title,
@@ -35,7 +38,8 @@ namespace MheanMaa.Controllers
         [HttpGet("{id:length(24)}", Name = "GetDonate")]
         public ActionResult<Donate> Get(string id)
         {
-            Donate don = _donateService.Get(id);
+            User user = _userService.Find(User.Identity.Name);
+            Donate don = _donateService.Get(id, user.DeptNo);
 
             if (don == null)
             {
@@ -48,6 +52,10 @@ namespace MheanMaa.Controllers
         [HttpPost]
         public ActionResult<Donate> Create(Donate don)
         {
+            User user = _userService.Find(User.Identity.Name);
+            don.Accepted = false;
+            don.Creator = user.FirstName;
+            don.DeptNo = user.DeptNo;
             _donateService.Create(don);
 
             return CreatedAtRoute("GetDonate", new { id = don.Id.ToString() }, don);
@@ -56,7 +64,8 @@ namespace MheanMaa.Controllers
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, Donate donIn)
         {
-            Donate don = _donateService.Get(id);
+            User user = _userService.Find(User.Identity.Name);
+            Donate don = _donateService.Get(id, user.DeptNo);
 
             if (don == null)
             {
@@ -71,7 +80,8 @@ namespace MheanMaa.Controllers
         [HttpDelete("{id:length(24)}")]
         public IActionResult Delete(string id)
         {
-            Donate don = _donateService.Get(id);
+            User user = _userService.Find(User.Identity.Name);
+            Donate don = _donateService.Get(id, user.DeptNo);
 
             if (don == null)
             {

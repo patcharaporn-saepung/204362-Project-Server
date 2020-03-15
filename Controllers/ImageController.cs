@@ -40,6 +40,7 @@ namespace ImageUpload.Controllers
                 using (Image<Rgba32> image = Image.Load(memoryStream.ToArray()))
                 {
                     double ratio = Convert.ToDouble(image.Width) / image.Height;
+                    image.Metadata.ExifProfile = null;
 
                     if (image.Width > image.Height && image.Width > _settings.MaxWidth)
                     {
@@ -61,11 +62,25 @@ namespace ImageUpload.Controllers
                     {
                         if (!Directory.Exists(Path.Join(_environment.WebRootPath, "uploads")))
                             Directory.CreateDirectory(Path.Join(_environment.WebRootPath, "uploads"));
+                        if (!Directory.Exists(Path.Join(_environment.WebRootPath, "placeholder")))
+                            Directory.CreateDirectory(Path.Join(_environment.WebRootPath, "placeholder"));
                         JpegEncoder encoder = new JpegEncoder()
                         {
                             Quality = 60
                         };
                         image.Save(Path.Join(_environment.WebRootPath, "uploads", newFName), encoder);
+
+                        // really smol image
+                        image.Mutate(x => x
+                         .Resize((int)Math.Round(image.Width / 10.0), (int)Math.Round(image.Height / 10.0))
+                        );
+
+                        JpegEncoder encoder2 = new JpegEncoder()
+                        {
+                            Quality = 10
+                        };
+                        image.Save(Path.Join(_environment.WebRootPath, "placeholder", newFName), encoder2);
+
                         return Accepted(new { fileName = newFName });
                     }
                     catch (Exception e)

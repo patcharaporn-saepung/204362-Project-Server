@@ -40,7 +40,7 @@ namespace MheanMaa.Services
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-            UserReturn userReturn = (UserReturn)user;
+            UserReturn userReturn = (UserReturn) user;
             userReturn.Token = tokenHandler.WriteToken(token);
 
             return userReturn;

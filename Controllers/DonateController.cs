@@ -71,7 +71,8 @@ namespace MheanMaa.Controllers
             {
                 return NotFound();
             }
-
+            donIn.Creator = don.Creator;
+            donIn.DeptNo = user.DeptNo;
             _donateService.Update(id, donIn);
 
             return NoContent();

@@ -22,10 +22,6 @@ namespace MheanMaa.Models
 
     public class UserReturn
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -40,7 +36,6 @@ namespace MheanMaa.Models
         {
             return new UserReturn
             {
-                Id = u.Id,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
                 Username = u.Username,

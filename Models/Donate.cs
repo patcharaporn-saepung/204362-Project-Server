@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace MheanMaa.Models
 {
@@ -14,6 +15,8 @@ namespace MheanMaa.Models
         public string Creator { get; set; }
 
         public bool Accepted { get; set; }
+
+        public double AcceptedOn { get; set; }
 
         public string Description { get; set; }
 

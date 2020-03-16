@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MheanMaa.Models;
 using MheanMaa.Services;
@@ -52,10 +53,14 @@ namespace MheanMaa.Controllers
         [HttpPost]
         public ActionResult<Donate> Create(Donate don)
         {
+            //fetch
             User user = _userService.Find(User.Identity.Name);
+
+            // prevent change
             don.Accepted = false;
             don.Creator = user.FirstName;
             don.DeptNo = user.DeptNo;
+            // create
             _donateService.Create(don);
 
             return CreatedAtRoute("GetDonate", new { id = don.Id.ToString() }, don);
@@ -64,16 +69,46 @@ namespace MheanMaa.Controllers
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, Donate donIn)
         {
+            // fetch
             User user = _userService.Find(User.Identity.Name);
             Donate don = _donateService.Get(id, user.DeptNo);
 
+            // not found (bc wrong dept or no donate record)
             if (don == null)
             {
                 return NotFound();
             }
+
+            // prevent change
+            don.Accepted = false;
             donIn.Creator = don.Creator;
-            donIn.DeptNo = user.DeptNo;
+            donIn.DeptNo = don.DeptNo;
             _donateService.Update(id, donIn);
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id:length(24)}")]
+        public IActionResult Accept(string id)
+        {
+            // fetch
+            User user = _userService.Find(User.Identity.Name);
+            Donate don = _donateService.Get(id, user.DeptNo);
+
+            // not found (bc wrong dept or no donate record)
+            if (don == null)
+            {
+                return NotFound();
+            }
+
+            // no reaccept
+            if (don.Accepted == false)
+            {
+                don.Accepted = true;
+                don.AcceptedOn = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                _donateService.Update(id, don);
+            }
+            
 
             return NoContent();
         }

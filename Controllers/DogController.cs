@@ -7,22 +7,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MheanMaa.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DogController : ControllerBase
     {
         private readonly DogService _dogService;
+        private readonly UserService _userService;
 
-        public DogController(DogService dogService)
+        public DogController(DogService dogService, UserService userService)
         {
             _dogService = dogService;
+            _userService = userService;
         }
 
         [HttpGet("list")]
         public ActionResult<List<DogList>> Get()
         {
-            return _dogService.Get().Select(dog => new DogList
+            User user = _userService.Find(User.Identity.Name);
+
+            return _dogService.Get(user.DeptNo).Select(dog => new DogList
             {
                 Id = dog.Id,
                 Name = dog.Name,
@@ -39,7 +43,8 @@ namespace MheanMaa.Controllers
         [HttpGet("{id:length(24)}", Name = "GetDog")]
         public ActionResult<Dog> Get(string id)
         {
-            Dog dog = _dogService.Get(id);
+            User user = _userService.Find(User.Identity.Name);
+            Dog dog = _dogService.Get(id, user.DeptNo);
 
             if (dog == null)
             {
@@ -52,6 +57,8 @@ namespace MheanMaa.Controllers
         [HttpPost]
         public ActionResult<Dog> Create(Dog dog)
         {
+            User user = _userService.Find(User.Identity.Name);
+            dog.DeptNo = user.DeptNo;
             _dogService.Create(dog);
 
             return CreatedAtRoute("GetDog", new { id = dog.Id.ToString() }, dog);
@@ -60,13 +67,14 @@ namespace MheanMaa.Controllers
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, Dog dogIn)
         {
-            Dog dog = _dogService.Get(id);
+            User user = _userService.Find(User.Identity.Name);
+            Dog dog = _dogService.Get(id, user.DeptNo);
 
             if (dog == null)
             {
                 return NotFound();
             }
-
+            dog.DeptNo = user.DeptNo;
             _dogService.Update(id, dogIn);
 
             return NoContent();
@@ -75,7 +83,8 @@ namespace MheanMaa.Controllers
         [HttpDelete("{id:length(24)}")]
         public IActionResult Delete(string id)
         {
-            Dog dog = _dogService.Get(id);
+            User user = _userService.Find(User.Identity.Name);
+            Dog dog = _dogService.Get(id, user.DeptNo);
 
             if (dog == null)
             {

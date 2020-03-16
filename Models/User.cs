@@ -18,6 +18,8 @@ namespace MheanMaa.Models
         public string Password { get; set; }
 
         public int DeptNo { get; set; }
+
+        public string UserType { get; set; }
     }
 
     public class UserReturn
@@ -30,6 +32,8 @@ namespace MheanMaa.Models
 
         public int DeptNo { get; set; }
 
+        public string UserType { get; set; }
+
         public string Token { get; set; }
 
         public static explicit operator UserReturn(User u)
@@ -40,6 +44,7 @@ namespace MheanMaa.Models
                 LastName = u.LastName,
                 Username = u.Username,
                 DeptNo = u.DeptNo,
+                UserType = u.UserType,
                 Token = null
             };
         }

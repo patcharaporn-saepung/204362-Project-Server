@@ -15,11 +15,15 @@ namespace MheanMaa.Services
             IMongoDatabase database = client.GetDatabase(settings.DBName);
             _dog = database.GetCollection<Dog>(settings.DogsColName);
         }
+
         public List<Dog> Get() =>
             _dog.Find(_ => true).ToList();
 
-        public Dog Get(string id) =>
-            _dog.Find(dog => dog.Id == id).FirstOrDefault();
+        public List<Dog> Get(int deptNo) =>
+            _dog.Find(dog => dog.DeptNo == deptNo).ToList();
+
+        public Dog Get(string id, int deptNo) =>
+            _dog.Find(dog => dog.Id == id && dog.DeptNo == deptNo).FirstOrDefault();
 
         public Dog Create(Dog newDog)
         {

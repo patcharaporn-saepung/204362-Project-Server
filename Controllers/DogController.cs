@@ -30,8 +30,8 @@ namespace MheanMaa.Controllers
             {
                 Id = dog.Id,
                 Name = dog.Name,
-                Age = dog.Age,
-                AgeUnit = dog.AgeUnit,
+                AgeYear = dog.AgeYear,
+                AgeMonth = dog.AgeMonth,
                 Sex = dog.Sex,
                 Description = dog.Description,
                 IsAlive = dog.IsAlive,

@@ -13,9 +13,9 @@ namespace MheanMaa.Models
 
         public string Breed { get; set; }
 
-        public int Age { get; set; }
+        public int AgeYear { get; set; }
 
-        public string AgeUnit { get; set; }
+        public int AgeMonth { get; set; }
 
         public string Sex { get; set; }
 
@@ -44,9 +44,9 @@ namespace MheanMaa.Models
 
         public string[] Name { get; set; }
 
-        public int Age { get; set; }
+        public int AgeYear { get; set; }
 
-        public string AgeUnit { get; set; }
+        public int AgeMonth { get; set; }
 
         public string Sex { get; set; }
 

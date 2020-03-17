@@ -74,7 +74,7 @@ namespace MheanMaa.Controllers
             {
                 return NotFound();
             }
-            dog.DeptNo = user.DeptNo;
+            dogIn.DeptNo = user.DeptNo;
             _dogService.Update(id, dogIn);
 
             return NoContent();

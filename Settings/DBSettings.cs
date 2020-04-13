@@ -8,6 +8,7 @@
         public string DonatesColName { get; set; }
         public string UsersColName { get; set; }
         public string NewsColName { get; set; }
+        public string ReportsColName { get; set; }
 
 
     }
@@ -20,5 +21,6 @@
         public string DonatesColName { get; set; }
         public string UsersColName { get; set; }
         public string NewsColName { get; set; }
+        public string ReportsColName { get; set; }
     }
 }

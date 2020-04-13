@@ -19,6 +19,10 @@ namespace MheanMaa.Models
 
         public string Writer { get; set; }
 
+        public double WriteDate { get; set; }
+
+        public double AcceptedDate { get; set; }
+
         public string ImgPath { get; set; }
 
         public int DeptNo { get; set; }

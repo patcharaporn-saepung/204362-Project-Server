@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MheanMaa.Models;
@@ -104,7 +105,7 @@ namespace MheanMaa.Controllers
             if (news.Accepted == false)
             {
                 news.Accepted = true;
-                news.AcceptedOn = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                news.AcceptedDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
                 _newsService.Update(id, news);
             }
             
